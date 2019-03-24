@@ -1,0 +1,98 @@
+\documentclass[10pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{picinpar,graphicx,bm}
+\usepackage{booktabs}
+\usepackage{diagbox}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{cases}
+\usepackage{multirow}
+\usepackage{algorithm}  
+\usepackage{algorithmic}
+
+\usepackage{listings}
+\usepackage{xcolor}
+% 定义可能使用到的颜色
+\definecolor{CPPLight}  {HTML} {686868}
+\definecolor{CPPSteel}  {HTML} {888888}
+\definecolor{CPPDark}   {HTML} {262626}
+\definecolor{CPPBlue}   {HTML} {4172A3}
+\definecolor{CPPGreen}  {HTML} {487818}
+\definecolor{CPPBrown}  {HTML} {A07040}
+\definecolor{CPPRed}    {HTML} {AD4D3A}
+\definecolor{CPPViolet} {HTML} {7040A0}
+\definecolor{CPPGray}  {HTML} {B8B8B8}
+\lstset{
+    columns=fixed,    
+   % numbers=left,                                        % 在左侧显示行号
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           % 设定行号格式
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+    morekeywords={alignas,continute,friend,register,true,alignof,decltype,goto,
+    reinterpret_cast,try,asm,defult,if,return,typedef,auto,delete,inline,short,
+    typeid,bool,do,int,signed,typename,break,double,long,sizeof,union,case,
+    dynamic_cast,mutable,static,unsigned,catch,else,namespace,static_assert,using,
+    char,enum,new,static_cast,virtual,char16_t,char32_t,explict,noexcept,struct,
+    void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
+    const,false,private,this,while,constexpr,float,protected,thread_local,
+    const_cast,for,public,throw,std,size_t,__global__,__device__,__host__},
+    emph={map,set,multimap,multiset,unordered_map,unordered_set,
+    unordered_multiset,unordered_multimap,vector,string,list,deque,
+    array,stack,forwared_list,iostream,memory,shared_ptr,unique_ptr,
+    random,bitset,ostream,istream,cout,cin,endl,move,default_random_engine,
+    uniform_int_distribution,iterator,algorithm,functional,bing,numeric,},
+    emphstyle=\color{CPPViolet}, 
+    frame=shadowbox,
+    basicstyle=\footnotesize\ttfamily,
+    tabsize=4,
+}
+
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}  
+
+
+%layout
+\usepackage{calc} 
+\setlength\textwidth{7in} 
+\setlength\textheight{12in} 
+\setlength\oddsidemargin{(\paperwidth-\textwidth)/2 - 1in}
+\setlength\topmargin{(\paperheight-\textheight -\headheight-\headsep-\footskip)/2 - 1.5in}
+
+
+\title{}
+\date{}
+\begin{document}
+\maketitle
+\mbox{} \\
+$$\min_{\bm{D} \in C,\bm{A}} \frac{1}{2}||\bm{Y}-\bm{DA}||_F^{2}+\lambda f(\bm{A})$$
+$\bm{Y} \in R^{n \times m}$: raw data matrix whose columns are signal.\\
+$\bm{D} \in R^{n \times k}$: a dictionary whose columns $||d_i||_2 \leq 1$ \\
+$\bm{A} \in R^{k \times m}$: the matrix of sparse coefficients. \\
+$f: R^{k \times m} \to R$: a sparsity-promoting function.
+
+$$
+\begin{array}{rl}
+& \min_{\bm{U},\bm{S},\bm{m},\bm{O}} \frac{1}{2} ||\bm{Y}-\bm{m}\bm{l}^T-\bm{U}\bm{S}-\bm{O}||_{F}^2+\lambda ||\bm{O}||_{2,c} \\
+&\bm{U}^T\bm{U}=\bm{I}_{q \times q}
+\end{array}
+$$
+$\bm{Y} \in R^{n \times m}$: raw data matrix whose columns are signal.\\
+$\bm{m} \in R^n$: mean vector.\\
+$\bm{l} \in R^m$: a vector where each element is equal to one.\\
+$\bm{U} \in R^{n \times q}$: an orthonormal matrix that spans the signal subspace.\\
+$\bm{S} \in R^{q \times m}$: a matrix whose columns are the principal components. \\
+$\bm{O}=[\bm{o}_1,\bm{o}_2,\dots,\bm{o}_{N}]$: $\bm{o}_n \neq \bm{0}_p$ whenever datum $n$ is an outlier, and $\bm{o}_n=\bm{0}_p$ otherwise.
+
+$$\min_{\hat{\bm{P}},\{\bm{L}_i\}_{i=1}^N}\sum_{i=1}^N||(\hat{\bm{P}}\bm{R}_i-\bm{L}_i)\Omega_i||_{F}^2+\tau||\hat{\bm{P}}-\bm{P}||_F^2$$
+$\bm{N}$: number of points.\\
+$\hat{\bm{P}}$:denoised point cloud. \\
+$\bm{P}$: noisy point cloud.\\
+$\bm{R}_i \in R^{N \times K}$: the operator that extracts the K-neighbourhood of $\bm{p}_i$.\\
+$\bm{L}_i$: the approximation of the local data matrix.\\
+$\bm{\Omega}_i \in R^{K \times K}$: A diagonal matrix whose elements are $\omega_{ij}$. \\
+$\tau$: it is a regularization parameter that controls the trade-off between the denoising 'strenth' and data fidelity. \\
+\end{document}
